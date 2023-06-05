@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
             <span className={style.copyright}>&copy;</span>
           </div>
           <div>
-            created by{" "}
+            by{" "}
             <a
               href="https://github.com/webdev1264"
               className={style.link}

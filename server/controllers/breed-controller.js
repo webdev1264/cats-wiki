@@ -13,6 +13,7 @@ class BreedController {
       next(e);
     }
   }
+
   async getOneBreed(req, res, next) {
     try {
       const { breed } = req.params;
@@ -32,6 +33,17 @@ class BreedController {
           throw ApiError.Error(err.status, err.message);
         }
       });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getFilteredBreeds(req, res, next) {
+    try {
+      const { name } = req.query;
+      const breeds = name.split(",");
+      const breedsData = await breedService.getFilteredBreeds(breeds);
+      res.json(breedsData);
     } catch (e) {
       next(e);
     }

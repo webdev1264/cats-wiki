@@ -87,7 +87,10 @@
       .card {
         margin-top: 18px;
         width: 48%;
-
+        .cardLink {
+          text-decoration: none;
+          color: #291507;
+        }
         img {
           width: 100%;
         }

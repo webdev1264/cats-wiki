@@ -1,8 +1,10 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import "./App.scss";
 import Root from "./router/root";
-import Admin from "./components/Admin/Admin";
+import Details from "./router/details";
 import Main from "./router/main";
+import Admin from "./components/Admin/Admin";
+import loader from "./utils/routerLoader";
+import "./App.scss";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +14,11 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Main />,
+      },
+      {
+        path: "/details/:name",
+        element: <Details />,
+        loader,
       },
       {
         path: "/admin",

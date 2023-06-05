@@ -1,0 +1,46 @@
+.searchWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+  height: 420px;
+  z-index: 100;
+  border-radius: 0 0 12px 12px;
+  padding: 7px 19px 50px;
+
+  .xMarkWrapper {
+    display: flex;
+    justify-content: end;
+  }
+
+  .xMark {
+    width: 25px;
+    height: 25px;
+    background: rgba(151, 151, 151, 0.1);
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .searchBarWrapper {
+    position: relative;
+    margin-top: 78px;
+    .searchBar {
+      width: 100%;
+      height: 46px;
+      border-radius: 59px;
+      border: 2px solid black;
+      padding: 11px 20px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+    }
+    .searchIcon {
+      position: absolute;
+      top: 13px;
+      right: 15px;
+      width: 17px;
+      height: 17px;
+    }
+  }
+}

@@ -13,6 +13,8 @@ const CharacteristicsSchema = new Schema({
 
 const BreedSchema = new Schema({
   breed: { type: String, required: true, unique: true },
+  previewImg: { type: String, required: true },
+  imgs: { type: [String] },
   description: { type: String, required: true },
   temperament: { type: String, required: true },
   origin: { type: String, required: true },

@@ -5,6 +5,7 @@ const router = new Router();
 
 router.get("/breeds/all", breedController.getAllBreeds);
 router.get("/breeds/:breed", breedController.getOneBreed);
+router.get("/breeds", breedController.getFilteredBreeds);
 router.get("/img/:imgName", breedController.getBreedImg);
 router.post("/breeds", breedController.addNewBreed);
 router.delete("/breeds", breedController.deleteBreed);

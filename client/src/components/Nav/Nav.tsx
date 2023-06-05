@@ -1,18 +1,46 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import bengal from "../../data/img/Bengal.jpg";
 import style from "./nav.module.scss";
+import { useEffect, useState } from "react";
+import api from "../../http";
+import { BreedRespInterface } from "../../types/interfaces";
+import { Link } from "react-router-dom";
+import Search from "../Search/Search";
 
-const Nav = () => {
+const Nav: React.FC = () => {
+  const [breeds, setBreeds] = useState<BreedRespInterface[]>(
+    [] as BreedRespInterface[]
+  );
+  const [isSearch, setIsSearch] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const response = await api.get<BreedRespInterface[]>(
+        "/breeds?name=bengal,norwegian%20forest,savannah,selkirk%20rex"
+      );
+      setBreeds(response.data);
+    })();
+  }, []);
+
+  const handleOnSearchClick = () => {
+    setIsSearch(!isSearch);
+  };
+
   return (
     <nav className={style.navWrapper}>
+      {isSearch && <Search handleOnSearchClick={handleOnSearchClick} />}
       <div className={style.searchWrapper}>
         <h2 className={style.searchHeader}>CatWiki</h2>
         <p className={style.searchDescr}>
           Get to know more about your cat breed
         </p>
         <div className={style.inputWrapper}>
-          <input className={style.search} type="text" placeholder="Search" />
+          <input
+            className={style.search}
+            type="text"
+            placeholder="Search"
+            onClick={handleOnSearchClick}
+          />
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             className={style.searchIcon}
@@ -24,22 +52,14 @@ const Nav = () => {
         <div className={style.divider}></div>
         <p className={style.popularDescr}>66+ Breeds For you to discover</p>
         <div className={style.cardsWrapper}>
-          <div className={style.card}>
-            <img src={bengal} alt="Bengal" />
-            <p className={style.cardName}>Bengal</p>
-          </div>
-          <div className={style.card}>
-            <img src={bengal} alt="Bengal" />
-            <p className={style.cardName}>Bengal</p>
-          </div>
-          <div className={style.card}>
-            <img src={bengal} alt="Bengal" />
-            <p className={style.cardName}>Bengal</p>
-          </div>
-          <div className={style.card}>
-            <img src={bengal} alt="Bengal" />
-            <p className={style.cardName}>Bengal</p>
-          </div>
+          {breeds.map((breed) => (
+            <div key={breed.breed} className={style.card}>
+              <Link to={`/details/${breed.breed}`} className={style.cardLink}>
+                <img src={breed.previewImg} alt={breed.breed} />
+                <p className={style.cardName}>{breed.breed}</p>
+              </Link>
+            </div>
+          ))}
         </div>
         <button className={style.btn}>See more &rarr;</button>
       </div>

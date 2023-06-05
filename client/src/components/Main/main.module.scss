@@ -1,9 +1,10 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 13px 18px 0;
-  .main {
-    min-height: calc(100vh - 118px - 13px);
-    min-height: calc(100dvh - 118px - 13px);
-  }
+  min-height: 100vh;
+  min-height: 100dvh;
   .link {
     text-decoration: none;
     color: black;
