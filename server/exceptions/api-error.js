@@ -4,6 +4,11 @@ class ApiError extends Error {
     this.status = status;
     this.errors = errors;
   }
+
+  static Error(status, message) {
+    return new ApiError(status, message);
+  }
+
   static BadRequest(message) {
     return new ApiError(400, message);
   }

@@ -1,0 +1,42 @@
+.container {
+  min-height: 118px;
+  background-color: #000;
+  padding: 30px;
+  border-radius: 42px 42px 0 0;
+
+  .logoWrapper {
+    width: 75px;
+
+    .name {
+      font-size: 14px;
+      line-height: 19px;
+      color: #fff;
+    }
+    .logo {
+      width: 25px;
+      path {
+        fill: #fff;
+      }
+    }
+  }
+  .content {
+    display: flex;
+    margin-top: 25px;
+    color: #fff;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 22px;
+    :nth-child(2) {
+      margin-left: 5px;
+    }
+    .copyright {
+      color: #fff;
+      font-size: 24px;
+      line-height: 24px;
+    }
+    .link {
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+}

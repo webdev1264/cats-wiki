@@ -1,0 +1,113 @@
+.navWrapper {
+  margin-top: 30px;
+  // min-height: 670px;
+  border-radius: 50px;
+  overflow: hidden;
+
+  .searchWrapper {
+    padding: 20px 30px;
+    height: 146px;
+    background: url("../../data/img/nav-bg-lg.png") center center/cover
+      no-repeat;
+    color: #ffffff;
+
+    .searchHeader {
+      font-family: "Mystery Quest", serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 19px;
+      color: #ffffff;
+    }
+
+    .searchDescr {
+      margin-top: 5px;
+      width: 135px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 14px;
+    }
+
+    .inputWrapper {
+      position: relative;
+      .search {
+        margin-top: 15px;
+        padding: 7px 13px;
+        width: 91.62px;
+        height: 30.7px;
+        border-radius: 60px;
+        border: none;
+      }
+      ::placeholder {
+        font-weight: 500;
+        font-size: 12px;
+        color: black;
+      }
+      .searchIcon {
+        position: absolute;
+        color: black;
+        width: 10px;
+        top: 22px;
+        left: 67px;
+      }
+    }
+  }
+  .popularWrapper {
+    padding: 18px 29px;
+    min-height: 524px;
+    background-color: #e3e1dc;
+
+    .popularHeader {
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 15px;
+    }
+
+    .divider {
+      width: 40.89px;
+      height: 3px;
+      background: #4d270c;
+      border-radius: 10px;
+      margin-top: 6px;
+    }
+
+    .popularDescr {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 22px;
+      margin-top: 17px;
+      width: 185px;
+    }
+
+    .cardsWrapper {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .card {
+        margin-top: 18px;
+        width: 48%;
+
+        img {
+          width: 100%;
+        }
+
+        .cardName {
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 15px;
+          margin-top: 12px;
+        }
+      }
+    }
+
+    .btn {
+      border: none;
+      background-color: #e3e1dc;
+      color: #291507;
+      font-size: 14px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  }
+}

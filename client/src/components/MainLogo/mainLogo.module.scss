@@ -1,0 +1,13 @@
+.logoWrapper {
+  display: flex;
+  width: 128px;
+  justify-content: space-between;
+
+  .name {
+    font-family: "Mystery Quest", serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 33px;
+    margin: 10px 0 0;
+  }
+}

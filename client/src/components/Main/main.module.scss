@@ -1,0 +1,11 @@
+.container {
+  padding: 13px 18px 0;
+  .main {
+    min-height: calc(100vh - 118px - 13px);
+    min-height: calc(100dvh - 118px - 13px);
+  }
+  .link {
+    text-decoration: none;
+    color: black;
+  }
+}

@@ -1,16 +1,19 @@
 const ApiError = require("../exceptions/api-error");
+const breedModel = require("../models/breed-model");
 const BreedModel = require("../models/breed-model");
 
 class UserService {
   async getAllBreeds() {
-    const breedsData = await BreedModel.find({});
+    const breedsData = await BreedModel.find({}).select("-_id").exec();
     return breedsData;
   }
 
   async getOneBreed(breed) {
     const breedData = await BreedModel.findOne({
       breed: { $regex: new RegExp("^" + breed + "$", "i") }, // ^ and $ to do exact match instead of partial
-    });
+    })
+      .select("-_id") //hides the _id property
+      .exec();
     return breedData;
   }
 

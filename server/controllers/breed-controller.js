@@ -2,6 +2,7 @@ const BreedDto = require("../dtos/breed-dto");
 const ApiError = require("../exceptions/api-error");
 const breedService = require("../services/breed-service");
 const isValidObjId = require("../utils");
+const path = require("path");
 
 class BreedController {
   async getAllBreeds(req, res, next) {
@@ -17,6 +18,20 @@ class BreedController {
       const { breed } = req.params;
       const breedData = await breedService.getOneBreed(breed);
       return res.json(breedData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async getBreedImg(req, res, next) {
+    try {
+      const { imgName } = req.params;
+      const rootDir = path.dirname(require.main.filename); //getting root folder address
+      return res.sendFile(`${rootDir}/public/img/${imgName}`, (err) => {
+        if (err) {
+          throw ApiError.Error(err.status, err.message);
+        }
+      });
     } catch (e) {
       next(e);
     }
