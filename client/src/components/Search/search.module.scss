@@ -1,10 +1,9 @@
 .searchWrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.94);
   width: 100%;
-  height: 420px;
   z-index: 100;
   border-radius: 0 0 12px 12px;
   padding: 7px 19px 50px;
@@ -41,6 +40,27 @@
       right: 15px;
       width: 17px;
       height: 17px;
+    }
+  }
+  .resultList {
+    list-style: none;
+    margin: 37px 0 0 10px;
+    // min-height: 160px;
+    .resultItemLink {
+      text-decoration: none;
+    }
+    .resultItem {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 22px;
+      color: #000000;
+    }
+    :hover {
+      background: rgba(151, 151, 151, 0.1);
+      border-radius: 12px;
     }
   }
 }

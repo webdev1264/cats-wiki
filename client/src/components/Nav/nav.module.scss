@@ -82,7 +82,12 @@
       margin-top: 8px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       flex-wrap: wrap;
+
+      .loading {
+        margin: 0 auto;
+      }
 
       .card {
         margin-top: 18px;

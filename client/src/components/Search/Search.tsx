@@ -2,32 +2,49 @@ import { ChangeEvent, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { BreedRespInterface } from "../../types/interfaces";
-import style from "./search.module.scss";
+import { Link } from "react-router-dom";
 import api from "../../http";
+import style from "./search.module.scss";
 
 interface SearchProps {
   handleOnSearchClick: () => void;
 }
 
+let breeds: BreedRespInterface[] = [] as BreedRespInterface[];
+
 const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
   const [searchValue, setSearchValue] = useState<string>("");
-  const [breeds, setBreeds] = useState<BreedRespInterface[]>(
-    [] as BreedRespInterface[]
-  );
+  // const [breeds, setBreeds] = useState<BreedRespInterface[]>([]);
+
+  const fetchData = async (searchQuery: string) => {
+    try {
+      const response = await api.get<BreedRespInterface[]>(
+        `/breeds?name=${searchQuery}`
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleOnChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    const response = await api.get<BreedRespInterface[]>(
-      `/breeds?name=${inputValue}`
-    );
-    setSearchValue(inputValue);
-    if (inputValue) {
-      return setBreeds(response.data);
+    if (!inputValue) {
+      breeds = [];
     }
-    setBreeds([]);
+    setSearchValue(inputValue);
+    const getData = async () => {
+      const resp = await fetchData(inputValue);
+      if (resp) {
+        return (breeds = resp.data);
+      }
+      breeds = [];
+    };
+    getData();
   };
 
-  console.log("===========RENDERED");
+  console.log("=======RENDERED");
+  
 
   return (
     <div className={style.searchWrapper}>
@@ -50,9 +67,15 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
           className={style.searchIcon}
         />
       </div>
-      <ul>
+      <ul className={style.resultList}>
         {breeds.map((breed) => (
-          <li key={breed.breed}>{breed.breed}</li>
+          <Link
+            className={style.resultItemLink}
+            key={breed.breed}
+            to={`/details/${breed.breed}`}
+          >
+            <li className={style.resultItem}>{breed.breed}</li>
+          </Link>
         ))}
       </ul>
     </div>
