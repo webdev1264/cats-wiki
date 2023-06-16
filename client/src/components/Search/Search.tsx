@@ -1,50 +1,56 @@
-import { ChangeEvent, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { BreedRespInterface } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import api from "../../http";
+import debounce from "../../utils/debounce";
 import style from "./search.module.scss";
 
 interface SearchProps {
   handleOnSearchClick: () => void;
 }
 
-let breeds: BreedRespInterface[] = [] as BreedRespInterface[];
+const fetchData = async (searchQuery: string) => {
+  try {
+    const response = await api.get<BreedRespInterface[]>(
+      `/breeds?name=${searchQuery}`
+    );
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
   const [searchValue, setSearchValue] = useState<string>("");
-  // const [breeds, setBreeds] = useState<BreedRespInterface[]>([]);
+  const [breeds, setBreeds] = useState<BreedRespInterface[]>([]);
 
-  const fetchData = async (searchQuery: string) => {
-    try {
-      const response = await api.get<BreedRespInterface[]>(
-        `/breeds?name=${searchQuery}`
-      );
-      return response;
-    } catch (e) {
-      console.log(e);
-    }
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
   };
 
-  const handleOnChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    if (!inputValue) {
-      breeds = [];
+  const getDebouncedData = useMemo(() => {
+    return debounce<React.ChangeEventHandler<HTMLInputElement>>(
+      handleOnChange,
+      500
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!searchValue) {
+      setBreeds([]);
+      return;
     }
-    setSearchValue(inputValue);
     const getData = async () => {
-      const resp = await fetchData(inputValue);
+      const resp = await fetchData(searchValue);
       if (resp) {
-        return (breeds = resp.data);
+        return setBreeds(resp.data);
       }
-      breeds = [];
+      setBreeds([]);
     };
     getData();
-  };
-
-  console.log("=======RENDERED");
-  
+  }, [searchValue]);
 
   return (
     <div className={style.searchWrapper}>
@@ -58,9 +64,8 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
       <div className={style.searchBarWrapper}>
         <input
           className={style.searchBar}
-          onChange={handleOnChange}
+          onChange={getDebouncedData}
           type="text"
-          value={searchValue}
         />
         <FontAwesomeIcon
           icon={faMagnifyingGlass}

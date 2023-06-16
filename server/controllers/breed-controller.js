@@ -41,6 +41,9 @@ class BreedController {
   async getFilteredBreeds(req, res, next) {
     try {
       const { name } = req.query;
+      if (!name) {
+        return res.json([]);
+      }
       const breeds = name.split(",");
       const breedsData = await breedService.getFilteredBreeds(breeds);
       res.json(breedsData);
