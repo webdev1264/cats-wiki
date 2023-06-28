@@ -1,30 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { BreedRespInterface } from "../../types/interfaces";
 import { Link } from "react-router-dom";
-import api from "../../http";
 import debounce from "../../utils/debounce";
+import { useStoreContext } from "../../context/store";
 import style from "./search.module.scss";
+import { observer } from "mobx-react-lite";
 
 interface SearchProps {
-  handleOnSearchClick: () => void;
+  handleOnSearchClick: React.MouseEventHandler;
 }
-
-const fetchData = async (searchQuery: string) => {
-  try {
-    const response = await api.get<BreedRespInterface[]>(
-      `/breeds?name=${searchQuery}`
-    );
-    return response;
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
   const [searchValue, setSearchValue] = useState<string>("");
-  const [breeds, setBreeds] = useState<BreedRespInterface[]>([]);
+  const { store } = useStoreContext();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -38,18 +27,7 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
   }, []);
 
   useEffect(() => {
-    if (!searchValue) {
-      setBreeds([]);
-      return;
-    }
-    const getData = async () => {
-      const resp = await fetchData(searchValue);
-      if (resp) {
-        return setBreeds(resp.data);
-      }
-      setBreeds([]);
-    };
-    getData();
+    store.searchBreeds(searchValue);
   }, [searchValue]);
 
   return (
@@ -66,6 +44,7 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
           className={style.searchBar}
           onChange={getDebouncedData}
           type="text"
+          name="search"
         />
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
@@ -73,7 +52,7 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
         />
       </div>
       <ul className={style.resultList}>
-        {breeds.map((breed) => (
+        {store.breeds.map((breed) => (
           <Link
             className={style.resultItemLink}
             key={breed.breed}
@@ -87,4 +66,5 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
   );
 };
 
-export default Search;
+const ObservableSearc = observer(Search);
+export default ObservableSearc;

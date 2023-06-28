@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import Store from "../store/store";
 
 const store = new Store();
@@ -7,4 +7,8 @@ const Context = createContext({
   store,
 });
 
-export { Context, store };
+const useStoreContext = () => {
+  return useContext(Context);
+};
+
+export { Context, store, useStoreContext };
