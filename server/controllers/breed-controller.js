@@ -44,7 +44,11 @@ class BreedController {
       if (!name) {
         return res.json([]);
       }
-      const breeds = name.split(",");
+      const queryString = name.replace(/[^A-Za-z0-9,\s]/g, "");
+      if (!queryString) {
+        return res.json([]);
+      }
+      const breeds = queryString.split(",");
       const breedsData = await breedService.getFilteredBreeds(breeds);
       res.json(breedsData);
     } catch (e) {

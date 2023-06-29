@@ -59,6 +59,20 @@ class Store {
       this.setIsLoading(false);
     }
   }
+
+  async getAllBreeds() {
+    this.setIsLoading(true);
+    try {
+      const response = await api.get<BreedRespInterface[]>("/breeds/all");
+      if (response.status === 200) {
+        this.setBreeds(response.data);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.setIsLoading(false);
+    }
+  }
 }
 
 export default Store;

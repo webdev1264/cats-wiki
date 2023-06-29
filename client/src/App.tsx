@@ -5,6 +5,7 @@ import Main from "./router/main";
 import Admin from "./components/Admin/Admin";
 import loader from "./utils/routerLoader";
 import "./App.scss";
+import AllBreeds from "./components/AllBreeds/AllBreeds";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin />,
+      },
+      {
+        path: "/all-breeds",
+        element: <AllBreeds />,
       },
     ],
   },

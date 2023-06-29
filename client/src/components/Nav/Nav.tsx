@@ -66,7 +66,9 @@ const Nav: React.FC = () => {
                   </Link>
                 </div>
               ))}
-              <button className={style.btn}>See more &rarr;</button>
+              <Link to="/all-breeds" className={style.link}>
+                See more &rarr;
+              </Link>
             </>
           )}
         </div>
