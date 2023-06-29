@@ -7,6 +7,7 @@ class Store {
   breeds = [] as BreedRespInterface[];
   error = "";
   isLoading = false;
+  isSearchLoading = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -28,11 +29,15 @@ class Store {
     this.isLoading = bool;
   }
 
+  setIsSearchLoading(bool: boolean) {
+    this.isSearchLoading = bool;
+  }
+
   async searchBreeds(searchQuery: string) {
-    if (!searchQuery) {
-      return this.setBreeds([]);
-    }
     try {
+      if (!searchQuery) {
+        return this.setBreeds([]);
+      }
       const response = await api.get<BreedRespInterface[]>(
         `/breeds?name=${searchQuery}`
       );
@@ -41,6 +46,8 @@ class Store {
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      this.setIsSearchLoading(false);
     }
   }
 

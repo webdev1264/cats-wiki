@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faSpinner,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import debounce from "../../utils/debounce";
 import { useStoreContext } from "../../context/store";
@@ -16,12 +20,18 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
   const { store } = useStoreContext();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    const { value } = e.target;
+    if (value) {
+      store.setIsSearchLoading(true);
+    } else {
+      store.setIsSearchLoading(false);
+    }
+    getDebouncedData(value);
   };
 
   const getDebouncedData = useMemo(() => {
-    return debounce<React.ChangeEventHandler<HTMLInputElement>>(
-      handleOnChange,
+    return debounce<React.Dispatch<React.SetStateAction<string>>>(
+      setSearchValue,
       500
     );
   }, []);
@@ -42,14 +52,17 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
       <div className={style.searchBarWrapper}>
         <input
           className={style.searchBar}
-          onChange={getDebouncedData}
+          onChange={handleOnChange}
           type="text"
           name="search"
         />
-        <FontAwesomeIcon
-          icon={faMagnifyingGlass}
-          className={style.searchIcon}
-        />
+        <div className={style.searchIcon}>
+          {store.isSearchLoading ? (
+            <FontAwesomeIcon icon={faSpinner} spin />
+          ) : (
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          )}
+        </div>
       </div>
       <ul className={style.resultList}>
         {store.breeds.map((breed) => (
