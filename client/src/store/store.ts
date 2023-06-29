@@ -4,6 +4,7 @@ import { BreedRespInterface } from "../types/interfaces";
 
 class Store {
   initialBreeds = [] as BreedRespInterface[];
+  breed = {} as BreedRespInterface;
   breeds = [] as BreedRespInterface[];
   error = "";
   isLoading = false;
@@ -15,6 +16,10 @@ class Store {
 
   setInitialBreeds(breeds: BreedRespInterface[]) {
     this.initialBreeds = breeds;
+  }
+
+  setBreed(breed: BreedRespInterface) {
+    this.breed = breed;
   }
 
   setBreeds(breeds: BreedRespInterface[]) {
@@ -31,6 +36,20 @@ class Store {
 
   setIsSearchLoading(bool: boolean) {
     this.isSearchLoading = bool;
+  }
+
+  async getBreed(name: string) {
+    try {
+      this.setIsLoading(true);
+      const response = await api.get<BreedRespInterface[]>(`/breeds/${name}`);
+      if (response.status === 200) {
+        this.setBreed(response.data[0]);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.setIsLoading(false);
+    }
   }
 
   async searchBreeds(searchQuery: string) {

@@ -1,23 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { BreedRespInterface } from "../../types/interfaces";
-import api from "../../http";
 import Scale from "../Scale/Scale";
 import style from "./breedDetails.module.scss";
+import { useStoreContext } from "../../context/store";
+import Loading from "../Loading";
+import { observer } from "mobx-react-lite";
 
 const BreedDetails: React.FC = () => {
-  const [breed, setBreed] = useState<BreedRespInterface>(
-    {} as BreedRespInterface
-  );
   const { name } = useParams();
+  const { store } = useStoreContext();
+  const { breed } = store;
+  const chars = { ...breed.characteristics };
+
   useEffect(() => {
-    (async () => {
-      const response = await api.get<BreedRespInterface[]>(`/breeds/${name}`);
-      setBreed(response.data[0]);
-    })();
+    if (name) {
+      store.getBreed(name);
+    }
   }, [name]);
 
-  const chars = { ...breed.characteristics };
+  if (store.isLoading) {
+    return (
+      <div className={style.loading}>
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <main className={style.wrapper}>
@@ -60,4 +67,5 @@ const BreedDetails: React.FC = () => {
   );
 };
 
-export default BreedDetails;
+const ObservableBreedDetails = observer(BreedDetails);
+export default ObservableBreedDetails;

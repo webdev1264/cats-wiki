@@ -8,6 +8,7 @@ const debounce = function <T extends (...args: Parameters<T>) => void>(
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
       callback(...args);
+      clearTimeout(timeoutId);
     }, timer);
   };
 };
