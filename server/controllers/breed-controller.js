@@ -27,7 +27,8 @@ class BreedController {
   async getBreedImg(req, res, next) {
     try {
       const { imgName } = req.params;
-      const rootDir = path.dirname(require.main.filename); //getting root folder address
+      // const rootDir = path.dirname(require.main.filename); //getting root folder address
+      const rootDir = process.cwd();
       return res.sendFile(`${rootDir}/public/img/${imgName}`, (err) => {
         if (err) {
           throw ApiError.Error(err.status, err.message);
