@@ -16,7 +16,7 @@ const BreedDetails: React.FC = () => {
     if (name) {
       store.getBreed(name);
     }
-  }, [name]);
+  }, [store, name]);
 
   if (store.isLoading) {
     return (
@@ -47,7 +47,7 @@ const BreedDetails: React.FC = () => {
         <span className={style.characterName}>Life Span: </span>
         {breed.lifeSpan}
       </p>
-      <ul>
+      <ul className={style.scales}>
         <Scale name="Adaptability:" num={parseInt(chars["adaptability"])} />
         <Scale
           name="Affection level:"
@@ -63,6 +63,19 @@ const BreedDetails: React.FC = () => {
           num={parseInt(chars["strangerFriendly"])}
         />
       </ul>
+      <h2 className={style.photosHeader}>Other photos</h2>
+      <div className={style.photosWrapper}>
+        {store.breed.imgs?.map((img) => {
+          return (
+            <img
+              key={img}
+              className={style.breedPhoto}
+              src={img}
+              alt={breed.breed}
+            />
+          );
+        })}
+      </div>
     </main>
   );
 };

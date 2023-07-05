@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
@@ -9,7 +7,7 @@ import { useStoreContext } from "../../context/store";
 import style from "./nav.module.scss";
 
 const Nav: React.FC = () => {
-  const [isSearch, setIsSearch] = useState(false);
+  const [isModal, setIsModal] = useState(false);
   const { store } = useStoreContext();
 
   useEffect(() => {
@@ -17,32 +15,17 @@ const Nav: React.FC = () => {
   }, [store]);
 
   const handleOnSearchClick = () => {
-    setIsSearch(!isSearch);
+    setIsModal(!isModal);
   };
 
   return (
     <nav className={style.navWrapper}>
-      {isSearch && <Search handleOnSearchClick={handleOnSearchClick} />}
       <div className={style.searchWrapper}>
         <h2 className={style.searchHeader}>CatWiki</h2>
         <p className={style.searchDescr}>
           Get to know more about your cat breed
         </p>
-        {!isSearch && (
-          <div className={style.inputWrapper}>
-            <input
-              className={style.search}
-              type="text"
-              name="search"
-              placeholder="Search"
-              onClick={handleOnSearchClick}
-            />
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              className={style.searchIcon}
-            />
-          </div>
-        )}
+        <Search handleOnSearchClick={handleOnSearchClick} isModal={isModal} />
       </div>
       <div className={style.popularWrapper}>
         <h2 className={style.popularHeader}>Most Searched Breeds</h2>

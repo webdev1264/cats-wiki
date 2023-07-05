@@ -13,9 +13,10 @@ import { observer } from "mobx-react-lite";
 
 interface SearchProps {
   handleOnSearchClick: React.MouseEventHandler;
+  isModal: boolean;
 }
 
-const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
+const Search: React.FC<SearchProps> = ({ handleOnSearchClick, isModal }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const { store } = useStoreContext();
 
@@ -29,6 +30,12 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
     getDebouncedData(value);
   };
 
+  const handleOnClick = (e: React.MouseEvent) => {
+    if (!isModal && window.innerWidth < 992) {
+      handleOnSearchClick(e);
+    }
+  };
+
   const getDebouncedData = useMemo(() => {
     return debounce<React.Dispatch<React.SetStateAction<string>>>(
       setSearchValue,
@@ -38,46 +45,79 @@ const Search: React.FC<SearchProps> = ({ handleOnSearchClick }) => {
 
   useEffect(() => {
     store.searchBreeds(searchValue);
-  }, [searchValue]);
+  }, [searchValue, store]);
 
   return (
-    <div className={style.searchWrapper}>
-      <div className={style.xMarkWrapper}>
-        <FontAwesomeIcon
-          className={style.xMark}
-          icon={faXmark}
-          onClick={handleOnSearchClick}
-        />
-      </div>
-      <div className={style.searchBarWrapper}>
+    <div
+      className={`${style.searchWrapper} ${
+        isModal ? style.modalSearchWrapper : ""
+      }`}
+      onClick={handleOnClick}
+    >
+      {isModal && (
+        <div className={style.xMarkWrapper}>
+          <FontAwesomeIcon
+            className={style.xMark}
+            icon={faXmark}
+            onClick={handleOnSearchClick}
+          />
+        </div>
+      )}
+      <div
+        className={`${style.searchBarWrapper} ${
+          isModal ? style.modalSearchBarWrapper : ""
+        }`}
+      >
         <input
-          className={style.searchBar}
+          className={`${style.searchBar} ${
+            isModal ? style.modalSearchBar : ""
+          }`}
           onChange={handleOnChange}
           type="text"
           name="search"
+          placeholder="Search"
         />
-        <div className={style.searchIcon}>
+        <div
+          className={`${style.searchIconWrapper} ${
+            isModal ? style.modalSearchIconWrapper : ""
+          }`}
+        >
           {store.isSearchLoading ? (
-            <FontAwesomeIcon icon={faSpinner} spin />
+            <FontAwesomeIcon
+              className={style.spinnerIcon}
+              icon={faSpinner}
+              spin
+            />
           ) : (
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <FontAwesomeIcon
+              className={style.searchIcon}
+              icon={faMagnifyingGlass}
+            />
           )}
         </div>
       </div>
-      <ul className={style.resultList}>
-        {store.breeds.map((breed) => (
-          <Link
-            className={style.resultItemLink}
-            key={breed.breed}
-            to={`/details/${breed.breed}`}
-          >
-            <li className={style.resultItem}>{breed.breed}</li>
-          </Link>
-        ))}
-      </ul>
+      {!!store.breeds.length && (
+        <div
+          className={`${style.resultWrapper} ${
+            isModal ? style.modalResultWrapper : ""
+          }`}
+        >
+          <ul className={style.resultList}>
+            {store.breeds.map((breed) => (
+              <Link
+                className={style.resultItemLink}
+                key={breed.breed}
+                to={`/details/${breed.breed}`}
+              >
+                <li className={style.resultItem}>{breed.breed}</li>
+              </Link>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
 
-const ObservableSearc = observer(Search);
-export default ObservableSearc;
+const ObservableSearch = observer(Search);
+export default ObservableSearch;

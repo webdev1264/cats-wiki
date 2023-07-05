@@ -1,14 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStoreContext } from "../../context/store";
 import style from "./allBreeds.module.scss";
 import { observer } from "mobx-react-lite";
 import Loading from "../Loading";
+import Pagination from "../Pagination/Pagination";
+import { Link } from "react-router-dom";
 
 const AllBreeds: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const { store } = useStoreContext();
+  const elementsPerPage = 2;
+
+  const from = (currentPage - 1) * elementsPerPage;
+  const to = currentPage * elementsPerPage;
+
+  const onClick = (page: number) => {
+    setCurrentPage(page);
+  };
+
   useEffect(() => {
     store.getAllBreeds();
   }, []);
+
   if (store.isLoading) {
     return (
       <div className={style.loading}>
@@ -19,20 +32,28 @@ const AllBreeds: React.FC = () => {
   return (
     <main className={style.wrapper}>
       <ul className={style.breedsWrapper}>
-        {store.breeds.map((breed) => {
+        {store.breeds.slice(from, to).map((breed) => {
           return (
-            <li key={breed.breed} className={style.breedItem}>
-              <h3 className={style.breedHeader}>{breed.breed}</h3>
-              <img
-                className={style.breedImg}
-                src={breed.previewImg}
-                alt={breed.breed}
-              />
-              <p className={style.breedDescr}>{breed.description}</p>
-            </li>
+            <Link key={breed.breed} to={`../details/${breed.breed}`} className={style.link}>
+              <li className={style.breedItem}>
+                <h3 className={style.breedHeader}>{breed.breed}</h3>
+                <img
+                  className={style.breedImg}
+                  src={breed.previewImg}
+                  alt={breed.breed}
+                />
+                <p className={style.breedDescr}>{breed.description}</p>
+              </li>
+            </Link>
           );
         })}
       </ul>
+      <Pagination
+        currentPage={currentPage}
+        elementsPerPage={elementsPerPage}
+        totalElements={store.breeds.length}
+        onClick={onClick}
+      />
     </main>
   );
 };

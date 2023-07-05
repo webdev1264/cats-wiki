@@ -9,13 +9,10 @@
     height: 146px;
     background: url("../../data/img/nav-bg-lg.png") center center/cover
       no-repeat;
-    color: #ffffff;
-
     .searchHeader {
       font-family: "Mystery Quest", serif;
       font-weight: 400;
       font-size: 14px;
-      line-height: 19px;
       color: #ffffff;
     }
 
@@ -24,13 +21,13 @@
       width: 135px;
       font-weight: 500;
       font-size: 12px;
-      line-height: 14px;
+      color: #ffffff;
     }
 
     .inputWrapper {
       position: relative;
+      margin-top: 15px;
       .search {
-        margin-top: 15px;
         padding: 7px 13px;
         width: 91.62px;
         height: 30.7px;
@@ -46,7 +43,7 @@
         position: absolute;
         color: black;
         width: 10px;
-        top: 22px;
+        top: 8px;
         left: 67px;
       }
     }
@@ -116,6 +113,22 @@
       margin-top: 20px;
       cursor: pointer;
       text-decoration: none;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .navWrapper {
+    .searchWrapper {
+      height: 540px;
+      padding: 115px 108px;
+      .searchHeader {
+        font-size: 64px;
+      }
+      .searchDescr {
+        font-size: 24px;
+        width: 371px;
+      }
     }
   }
 }
