@@ -13,7 +13,7 @@ const Info: React.FC = () => {
 
   return (
     <section className={style.info}>
-      <div>
+      <div className={style.infoDescr}>
         <div className={style.divider}></div>
         <h2 className={style.header}>Why should you have a cat?</h2>
         <p className={`${style.text} ${isExpanded ? style.expandText : ""}`}>

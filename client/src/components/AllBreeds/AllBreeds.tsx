@@ -20,7 +20,7 @@ const AllBreeds: React.FC = () => {
 
   useEffect(() => {
     store.getAllBreeds();
-  }, []);
+  }, [store]);
 
   if (store.isLoading) {
     return (
@@ -34,15 +34,23 @@ const AllBreeds: React.FC = () => {
       <ul className={style.breedsWrapper}>
         {store.breeds.slice(from, to).map((breed) => {
           return (
-            <Link key={breed.breed} to={`../details/${breed.breed}`} className={style.link}>
+            <Link
+              key={breed.breed}
+              to={`../details/${breed.breed}`}
+              className={style.link}
+            >
               <li className={style.breedItem}>
-                <h3 className={style.breedHeader}>{breed.breed}</h3>
-                <img
-                  className={style.breedImg}
-                  src={breed.previewImg}
-                  alt={breed.breed}
-                />
-                <p className={style.breedDescr}>{breed.description}</p>
+                <div>
+                  <img
+                    className={style.breedImg}
+                    src={breed.previewImg}
+                    alt={breed.breed}
+                  />
+                </div>
+                <div>
+                  <h3 className={style.breedHeader}>{breed.breed}</h3>
+                  <p className={style.breedDescr}>{breed.description}</p>
+                </div>
               </li>
             </Link>
           );

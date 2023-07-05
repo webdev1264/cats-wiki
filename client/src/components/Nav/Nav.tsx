@@ -30,7 +30,7 @@ const Nav: React.FC = () => {
       <div className={style.popularWrapper}>
         <h2 className={style.popularHeader}>Most Searched Breeds</h2>
         <div className={style.divider}></div>
-        <p className={style.popularDescr}>Breeds For you to discover</p>
+        <p className={style.popularDescr}>Breeds for you to discover</p>
         <div className={style.cardsWrapper}>
           {store.isLoading ? (
             <div className={style.loading}>

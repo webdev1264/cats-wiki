@@ -43,3 +43,34 @@
   justify-content: center;
   margin-top: 50px;
 }
+
+@media screen and (min-width: 992px) {
+  .wrapper{
+    padding: 40px 100px;
+    .infoWrapper {
+      display: flex;
+      justify-content: space-between;
+      .previewWrapper {
+        width: 25%;
+      }
+      .descriptionWrapper {
+        width: 65%;
+      }
+    }
+    .scales{
+      width: 48vw;
+    }
+    .photosHeader{
+      font-size: 30px;
+      margin-top: 50px;
+    }
+    .photosWrapper{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      .breedPhoto{
+        width: 23%;
+      }
+    }
+  }
+}

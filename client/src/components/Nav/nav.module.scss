@@ -70,9 +70,9 @@
     .popularDescr {
       font-weight: 700;
       font-size: 18px;
-      line-height: 22px;
       margin-top: 17px;
       width: 185px;
+      color: #291507;
     }
 
     .cardsWrapper {
@@ -92,16 +92,15 @@
         .cardLink {
           text-decoration: none;
           color: #291507;
+          .cardName {
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 15px;
+            margin-top: 12px;
+          }
         }
         img {
           width: 100%;
-        }
-
-        .cardName {
-          font-weight: 600;
-          font-size: 14px;
-          line-height: 15px;
-          margin-top: 12px;
         }
       }
     }
@@ -128,6 +127,29 @@
       .searchDescr {
         font-size: 24px;
         width: 371px;
+      }
+    }
+    .popularWrapper {
+      padding: 40px 108px;
+      .popularHeader {
+        font-size: 18px;
+      }
+      .popularDescr {
+        font-size: 40px;
+        width: 540px;
+      }
+      .cardsWrapper {
+        .card {
+          width: 23%;
+          .cardLink{
+            .cardName{
+              font-size: 18px;
+            }
+          }
+        }
+      }
+      .link {
+        font-size: 18px;
       }
     }
   }

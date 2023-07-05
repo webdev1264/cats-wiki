@@ -2,12 +2,20 @@
   display: flex;
   width: 128px;
   justify-content: space-between;
-
+  align-items: flex-end;
   .name {
     font-family: "Mystery Quest", serif;
     font-weight: 400;
     font-size: 24px;
-    line-height: 33px;
-    margin: 10px 0 0;
+    line-height: 15px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .logoWrapper {
+    width: 150px;
+    .name {
+      font-size: 30px;
+    }
   }
 }

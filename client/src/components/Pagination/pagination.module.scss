@@ -1,7 +1,8 @@
 .wrapper {
   list-style: none;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 10px;
   flex-wrap: wrap;
   .pageNumber {
     display: flex;

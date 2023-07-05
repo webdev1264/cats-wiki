@@ -60,3 +60,18 @@
 .imgMargin {
   margin: 14px 0 0 50px;
 }
+
+@media screen and (min-width: 992px) {
+  .info {
+    display: flex;
+    justify-content: space-between;
+    padding: 100px 108px;
+    .infoDescr{
+      width: 48%;
+    }
+    .catsWrapper{
+      margin-top: 0;
+      width: 48%;
+    }
+  }
+}

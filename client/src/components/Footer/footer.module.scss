@@ -6,7 +6,6 @@
 
   .logoWrapper {
     width: 75px;
-
     .name {
       font-size: 14px;
       line-height: 19px;
@@ -37,6 +36,20 @@
     .link {
       color: #fff;
       font-weight: 600;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .container {
+    .logoWrapper {
+      width: 150px;
+      .name {
+        font-size: 30px;
+      }
+      .logo {
+        width: 40px;
+      }
     }
   }
 }
